@@ -7,12 +7,15 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://127.0.0.1:27017/test')
+require('dotenv').config()
+db_url= process.env.db_url
+
+mongoose.connect(db_url)
 
 app.get('/get', (req,res) => {
     TodoModel.find()
     .then(result => res.json(result))
-    .catch(err => res.json(err))
+      .catch(err => res.json(err))
 })
 
 app.post('/add', (req, res) => {
